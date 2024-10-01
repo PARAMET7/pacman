@@ -1,6 +1,8 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
+const scoreEl= document.querySelector("#scoreEl");
+
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
@@ -38,6 +40,7 @@ class Pellet {
 const boundaries = [];
 const pellets = [];
 let lastKey = "";
+let score = 0;
 
 // Map layout
 const map = [
@@ -301,6 +304,8 @@ function animate() {
       pellet.radius + player.radius
     ) {
       pellets.splice(i, 1); // Remove pellet
+      score +=10
+      scoreEl.innerHTML= score;
     }
   }
 
