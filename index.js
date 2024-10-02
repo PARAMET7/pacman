@@ -39,6 +39,9 @@ class Pellet {
 
 const boundaries = [];
 const pellets = [];
+
+
+
 let lastKey = "";
 let score = 0;
 
@@ -70,113 +73,149 @@ function createImage(src) {
 map.forEach((row, i) => {
   row.forEach((symbol, j) => {
     switch (symbol) {
-      case "-":
+      case '-':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeHorizontal.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/pipeHorizontal.png')
           })
-        );
-        break;
-      case "|":
+        )
+        break
+      case '|':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeVertical.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/pipeVertical.png')
           })
-        );
-        break;
-      case "1":
+        )
+        break
+      case '1':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeCorner1.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/pipeCorner1.png')
           })
-        );
-        break;
-      case "2":
+        )
+        break
+      case '2':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeCorner2.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/pipeCorner2.png')
           })
-        );
-        break;
-      case "3":
+        )
+        break
+      case '3':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeCorner3.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/pipeCorner3.png')
           })
-        );
-        break;
-      case "4":
+        )
+        break
+      case '4':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeCorner4.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/pipeCorner4.png')
           })
-        );
-        break;
-      case "b":
+        )
+        break
+      case 'b':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/block.png"),
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i
+            },
+            image: createImage('./img/block.png')
           })
-        );
-        break;
-      case "[":
+        )
+        break
+      case '[':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/capLeft.png"),
+            position: {
+              x: j * Boundary.width,
+              y: i * Boundary.height
+            },
+            image: createImage('./img/capLeft.png')
           })
-        );
-        break;
-      case "]":
+        )
+        break
+      case ']':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/capRight.png"),
+            position: {
+              x: j * Boundary.width,
+              y: i * Boundary.height
+            },
+            image: createImage('./img/capRight.png')
           })
-        );
-        break;
-      case "_":
+        )
+        break
+      case '_':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/capBottom.png"),
+            position: {
+              x: j * Boundary.width,
+              y: i * Boundary.height
+            },
+            image: createImage('./img/capBottom.png')
           })
-        );
-        break;
-      case "^":
+        )
+        break
+      case '^':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/capTop.png"),
+            position: {
+              x: j * Boundary.width,
+              y: i * Boundary.height
+            },
+            image: createImage('./img/capTop.png')
           })
-        );
-        break;
-      case "+":
+        )
+        break
+      case '+':
         boundaries.push(
           new Boundary({
-            position: { x: Boundary.width * j, y: Boundary.height * i },
-            image: createImage("./img/pipeCross.png"),
+            position: {
+              x: j * Boundary.width,
+              y: i * Boundary.height
+            },
+            image: createImage('./img/pipeCross.png')
           })
-        );
-        break;
+        )
+        break
       case '5':
-      boundaries.push(
-        new Boundary({
-          position: {
-            x: j * Boundary.width,
-            y: i * Boundary.height
-          },
-          color: 'blue',
-          image: createImage('./img/pipeConnectorTop.png')
-        })
-      )
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: j * Boundary.width,
+              y: i * Boundary.height
+            },
+            color: 'blue',
+            image: createImage('./img/pipeConnectorTop.png')
+          })
+        )
         break
       case '6':
         boundaries.push(
@@ -213,16 +252,16 @@ map.forEach((row, i) => {
           })
         )
         break
-      case ".":
+      case '.':
         pellets.push(
           new Pellet({
             position: {
-              x: Boundary.width * j + Boundary.width / 2,
-              y: Boundary.height * i + Boundary.height / 2,
-            },
+              x: j * Boundary.width + Boundary.width / 2,
+              y: i * Boundary.height + Boundary.height / 2
+            }
           })
-        );
-        break;
+        )
+        break
     }
   });
 });
@@ -238,6 +277,32 @@ class Player {
     c.beginPath();
     c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
     c.fillStyle = "yellow";
+    c.fill();
+    c.closePath();
+  }
+
+  update() {
+    this.draw();
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+  }
+}
+
+class Ghost {
+  static speed =2;
+  constructor({ position, velocity, color='red' }) {
+    this.position = position;
+    this.velocity = velocity;
+    this.radius = 15;
+    this.color = color;
+    this.prevCollisions = [];
+    this.speed = 2;
+  }
+
+  draw() {
+    c.beginPath();
+    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+    c.fillStyle = this.color;
     c.fill();
     c.closePath();
   }
@@ -266,31 +331,117 @@ const keys = {
 
 // Detect collision between circle and rectangle
 function circleCollidesWithRectangle({ circle, rectangle }) {
+  const padding  = Boundary.width /2 -circle.radius -1;
   return (
-    circle.position.y - circle.radius + circle.velocity.y <= rectangle.position.y + rectangle.height &&
-    circle.position.y + circle.radius + circle.velocity.y >= rectangle.position.y &&
-    circle.position.x - circle.radius + circle.velocity.x <= rectangle.position.x + rectangle.width &&
-    circle.position.x + circle.radius + circle.velocity.x >= rectangle.position.x
+    circle.position.y - circle.radius + circle.velocity.y <= rectangle.position.y + rectangle.height + padding &&
+    circle.position.x + circle.radius + circle.velocity.x >= rectangle.position.x -padding &&
+
+    circle.position.y + circle.radius + circle.velocity.y >= rectangle.position.y - padding &&
+
+    circle.position.x - circle.radius + circle.velocity.x <= rectangle.position.x + padding + rectangle.width
   );
 }
+
+const ghosts = [
+  new Ghost({
+    position: {
+      x: Boundary.width * 6 + Boundary.width / 2,
+      y: Boundary.height + Boundary.height / 2
+    },
+    velocity: {
+      x: Ghost.speed,
+      y: 0
+    }
+  })
+  // new Ghost({
+  //   position: {
+  //     x: Boundary.width * 8,
+  //     y: Boundary.height * 8
+  //   },
+  //   velocity: {
+  //     x: 5,
+  //     y: 0
+  //   },
+  //   color: 'blue'
+  // })
+];
+
+
 
 // Animate the game
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Handle player movement and boundary collision
+  // Reset player velocity
   player.velocity.x = 0;
   player.velocity.y = 0;
 
+  // Handle player movement and boundary collision
   if (keys.w.pressed && lastKey === "w") {
     player.velocity.y = -5;
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+      if (
+        circleCollidesWithRectangle({
+          circle: { ...player, velocity: { x: 0, y: -5 } },
+          rectangle: boundary
+        })
+      ) {
+        player.velocity.y = 0;
+        break;
+      }else{
+        player.velocity.y = -5;
+      }
+    }
   } else if (keys.a.pressed && lastKey === "a") {
     player.velocity.x = -5;
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+      if (
+        circleCollidesWithRectangle({
+          circle: { ...player, velocity: { x: -5, y: 0 } },
+          rectangle: boundary
+        })
+      ) {
+        player.velocity.x = 0;
+        break;
+      }else{
+        player.velocity.x = -5;
+      }
+    }
   } else if (keys.s.pressed && lastKey === "s") {
     player.velocity.y = 5;
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+      if (
+        circleCollidesWithRectangle({
+          circle: { ...player, velocity: { x: 0, y: 5 } },
+          rectangle: boundary
+        })
+      ) {
+        player.velocity.y = 0;
+        break;
+      }else{
+        player.velocity.y= 5;
+      }
+    }
   } else if (keys.d.pressed && lastKey === "d") {
     player.velocity.x = 5;
+    for (let i = 0; i < boundaries.length; i++) {
+      const boundary = boundaries[i];
+      if (
+        circleCollidesWithRectangle({
+          circle: { ...player, velocity: { x: 5, y: 0 } },
+          rectangle: boundary
+        })
+      ) {
+        player.velocity.x = 0;
+        break;
+      }else{
+        player.velocity.x= 5;
+      }
+    }
   }
 
   // Pellet logic
@@ -304,28 +455,21 @@ function animate() {
       pellet.radius + player.radius
     ) {
       pellets.splice(i, 1); // Remove pellet
-      score +=10
-      scoreEl.innerHTML= score;
+      score += 10;
+      scoreEl.innerHTML = score;
     }
   }
 
-  // Boundary logic
+  // Boundary logic (also done during movement)
   boundaries.forEach((boundary) => {
     boundary.draw();
 
-    if (circleCollidesWithRectangle({ circle: player, rectangle: boundary })) {
-      if (player.velocity.x > 0) {
-        player.position.x = boundary.position.x - player.radius;
-      } else if (player.velocity.x < 0) {
-        player.position.x = boundary.position.x + boundary.width + player.radius;
-      }
-
-      if (player.velocity.y > 0) {
-        player.position.y = boundary.position.y - player.radius;
-      } else if (player.velocity.y < 0) {
-        player.position.y = boundary.position.y + boundary.height + player.radius;
-      }
-
+    if (
+      circleCollidesWithRectangle({
+        circle: player,
+        rectangle: boundary
+      })
+    ) {
       player.velocity.x = 0;
       player.velocity.y = 0;
     }
@@ -333,9 +477,187 @@ function animate() {
 
   // Update player position
   player.update();
+
+  ghosts.forEach((ghost) => {
+    ghost.update();
+    const collisions = [];
+
+    boundaries.forEach((boundary) => {
+      if (
+        !collisions.includes('right') &&
+        circleCollidesWithRectangle({
+          circle: { ...ghost, velocity: { x: ghost.speed, y: 0 } },
+          rectangle: boundary,
+        })
+      ) {
+        collisions.push('right');
+      }
+      if (
+        !collisions.includes('left') &&
+        circleCollidesWithRectangle({
+          circle: { ...ghost, velocity: { x: - ghost.speed, y: 0 } },
+          rectangle: boundary,
+        })
+      ) {
+        collisions.push('left');
+      }
+      if (
+        !collisions.includes('up') &&
+        circleCollidesWithRectangle({
+          circle: { ...ghost, velocity: { x: 0, y: - ghost.speed } },
+          rectangle: boundary,
+        })
+      ) {
+        collisions.push('up');
+      }
+      if (
+        !collisions.includes('down') &&
+        circleCollidesWithRectangle({
+          circle: { ...ghost, velocity: { x: 0, y: ghost.speed } },
+          rectangle: boundary,
+        })
+      ) {
+        collisions.push('down');
+      }
+    });
+
+    if (collisions.length > ghost.prevCollisions.length){
+      ghost.prevCollisions = collisions
+    }
+
+    // Compare collisions
+    if (JSON.stringify(collisions) !== JSON.stringify(ghost.prevCollisions))
+      {
+          if (ghost.velocity.x > 0){
+            ghost.prevCollisions.push('right')
+          }
+          else if (ghost.velocity.x < 0) {
+            ghost.prevCollisions.push('left')
+          }
+          else if ( ghost.velocity.y < 0){
+             ghost.prevCollisions.push('up')
+          }
+          else if ( ghost.velocity.y > 0) {
+            ghost.prevCollisions.push('down')
+          }
+
+          const pathways = ghost.prevCollisions.filter(collision => {
+            return !collisions.includes(collision)
+          })
+          const direction = pathways[Math.floor(Math.random() * pathways.length)];
+
+          switch (direction) {
+            case 'down':
+              ghost.velocity.y = ghost.speed;
+              ghost.velocity.x = 0;
+              break;
+            case 'up':
+              ghost.velocity.y = -ghost.speed;
+              ghost.velocity.x = 0;
+              break;
+            case 'right':
+              ghost.velocity.y = 0;
+              ghost.velocity.x = ghost.speed;
+              break;
+            case 'left':
+              ghost.velocity.y = 0;
+              ghost.velocity.x = -ghost.speed;
+              break;
+            }
+    ghost.prevCollisions = [];
+
+    }
+
+  });
+  // Update ghost logic (expand here as needed)
+  // ghosts.forEach((ghost) => {
+  //   ghost.update();
+  //   const collisions=[];
+
+  //   boundaries.forEach((boundary) => {
+  //     if (
+  //       !collisions.includes('right') &&
+  //       circleCollidesWithRectangle({
+  //         circle: { ...player, velocity: { x: 5, y: 0 } },
+  //         rectangle: boundary
+  //       })
+  //     )
+  //      {
+  //       collisions.push('right')
+  //     }
+  //     if (
+  //       !collisions.includes('left') &&
+  //       circleCollidesWithRectangle({
+  //         circle: { ...player, velocity: { x: -5, y: 0 } },
+  //         rectangle: boundary
+  //       })
+  //     )
+  //      {
+  //       collisions.push('left')
+  //     }
+
+  //     if (
+  //       !collisions.includes('up') &&
+  //       circleCollidesWithRectangle({
+  //         circle: { ...player, velocity: { x: 0, y: -5 } },
+  //         rectangle: boundary
+  //       })
+  //     )
+  //      {
+  //       collisions.push('up')
+  //     }
+
+  //     if (
+  //       !collisions.includes('down') &&
+  //       circleCollidesWithRectangle({
+  //         circle: { ...player, velocity: { x: 0, y: 5 } },
+  //         rectangle: boundary
+  //       })
+  //     )
+  //      {
+  //       collisions.push('down')
+  //     }
+  //   })
+  //   if (collisions.length> ghost.prevCollisios.length)
+  //     ghost.prevCollisios = collisions
+
+  //   if (JSON.stringify(collisions) !== JSON.stringify(ghost.prevCollisios))
+      //{
+  //     if (ghost.velocity.x > 0) ghost.prevCollisios.push('right')
+  //
+  //   else if (ghost.velocity.x <0) ghost.prevCollisios.push('left')
+  //   else if ( ghost.velocity.y <0) ghost.prevCollisios.push('up')
+  //   else if ( ghost.velocity.y> 0) ghost.prevCollisios.push('down')
+
+  //   const pathways = ghost.prevCollisios.filter((collision) => {
+  //     return !collision.includes(collision)
+  //   })
+  //   const direction = pathways[Math.random() * pathways.length]
+
+  //   switch (direction) {
+  //     case 'down':
+  //       ghost.velocity.y = 5
+  //       ghost.velocity.x = 0
+  //       break;
+  //     case 'up':
+  //       ghost.velocity.y = -5
+  //       ghost.velocity.x = 0
+  //       break;
+  //     case 'right':
+  //       ghost.velocity.y = 0
+  //       ghost.velocity.x = 5
+  //       break;
+  //     case 'left':
+  //       ghost.velocity.y = 0
+  //       ghost.velocity.x = -5
+  //       break;
+  //   }
+  //   ghost.prevCollisios = []
+  // })
 }
 
 animate();
+
 
 // Event listeners for player controls
 addEventListener('keydown', ({ key }) => {
@@ -375,6 +697,8 @@ addEventListener('keyup', ({ key }) => {
       break;
   }
 });
+
+
 
 // const boundaries = [
 //   new Boundaries({
