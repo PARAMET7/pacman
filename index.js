@@ -37,9 +37,24 @@ class Pellet {
   }
 }
 
+class PowerUp {
+  constructor({ position }) {
+    this.position = position;
+    this.radius = 10;
+  }
+
+  draw() {
+    c.beginPath();
+    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+    c.fillStyle = "white";
+    c.fill();
+    c.closePath();
+  }
+}
+
 const boundaries = [];
 const pellets = [];
-
+const powerUps = [];
 
 
 let lastKey = "";
@@ -262,6 +277,16 @@ map.forEach((row, i) => {
           })
         )
         break
+      case 'p':
+      powerUps.push(
+        new PowerUp({
+          position: {
+            x: j * Boundary.width + Boundary.width / 2,
+            y: i * Boundary.height + Boundary.height / 2
+          }
+        })
+      )
+      break
     }
   });
 });
@@ -271,20 +296,35 @@ class Player {
     this.position = position;
     this.velocity = velocity;
     this.radius = 15;
+    this.radians = 0.60;
+    this.openRate =0.12;
+    this.rotation= 0;
   }
 
   draw() {
+    c.save()
+    c.translate(this.position.x, this.position.y)
+    c.rotate(this.rotation)
+    c.translate(-this.position.x, -this.position.y)
+
     c.beginPath();
-    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+    c.arc(this.position.x, this.position.y, this.radius, this.radians, Math.PI * 2 -this.radians);
+    c.lineTo(this.position.x , this.position.y)
     c.fillStyle = "yellow";
     c.fill();
     c.closePath();
+    c.restore()
   }
 
   update() {
     this.draw();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+
+    if (this.radians<0 || this.radians >.75) this.openRate
+    = -this.openRate
+
+    this.radians += this.openRate
   }
 }
 
@@ -297,12 +337,13 @@ class Ghost {
     this.color = color;
     this.prevCollisions = [];
     this.speed = 2;
+    this.scared = false;
   }
 
   draw() {
     c.beginPath();
     c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
-    c.fillStyle = this.color;
+    c.fillStyle = this.scared ? 'gray' : this.color;
     c.fill();
     c.closePath();
   }
@@ -342,6 +383,8 @@ function circleCollidesWithRectangle({ circle, rectangle }) {
   );
 }
 
+
+
 const ghosts = [
   new Ghost({
     position: {
@@ -352,25 +395,36 @@ const ghosts = [
       x: Ghost.speed,
       y: 0
     }
+  }),
+  new Ghost({
+    position: {
+      x: Boundary.width * 6 + Boundary.width / 2,
+      y: Boundary.height *3 + Boundary.height / 2
+    },
+    velocity: {
+      x: Ghost.speed,
+      y: 0
+    },
+    color: 'blue'
+  }),
+  new Ghost({
+    position: {
+      x: Boundary.width * 6 + Boundary.width / 2,
+      y: Boundary.height *7 + Boundary.height / 2
+    },
+    velocity: {
+      x: Ghost.speed,
+      y: 0
+    },
+    color: 'pink'
   })
-  // new Ghost({
-  //   position: {
-  //     x: Boundary.width * 8,
-  //     y: Boundary.height * 8
-  //   },
-  //   velocity: {
-  //     x: 5,
-  //     y: 0
-  //   },
-  //   color: 'blue'
-  // })
 ];
 
 
-
+let animationId
 // Animate the game
 function animate() {
-  requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
   // Reset player velocity
@@ -444,6 +498,54 @@ function animate() {
     }
   }
 
+  //detect collision beteen ghost and player;
+  for (let i =ghosts.length -1; 0<=i;i--){
+    const ghost = ghosts[i]
+
+    if (
+      Math.hypot(
+        ghost.position.x - player.position.x,
+         ghost.position.y - player.position.y
+        ) <
+      ghost.radius + player.radius
+    ){
+      if (ghost.scared){
+        ghosts.splice(i,1)
+      } else {
+        cancelAnimationFrame(animationId)
+        console.log('you lose')
+      }
+    }
+  }
+
+  //win condition goes here;
+  if ( pellets.length===0){
+    cancelAnimationFrame(animationId);
+    console.log('you win');
+  }
+
+  //power up:
+  for (let i = powerUps.length - 1; i >= 0; i--){
+    const powerUp = powerUps[i]
+    powerUp.draw()
+  //player collides with powerup
+    if (
+      Math.hypot(powerUp.position.x - player.position.x,
+                 powerUp.position.y - player.position.y
+        ) <
+        powerUp.radius + player.radius
+    ) {
+      powerUps.splice(i,1)
+      //make ghost scared;
+      ghosts.forEach(ghost =>{
+        ghost.scared = true;
+        setTimeout(() => {
+          ghost.scared = false;
+        }, 5000);
+      })
+    }
+  }
+
   // Pellet logic
   for (let i = pellets.length - 1; i >= 0; i--) {
     const pellet = pellets[i];
@@ -451,7 +553,9 @@ function animate() {
 
     // Pellet collection logic
     if (
-      Math.hypot(pellet.position.x - player.position.x, pellet.position.y - player.position.y) <
+      Math.hypot(pellet.position.x - player.position.x,
+                 pellet.position.y - player.position.y
+                ) <
       pellet.radius + player.radius
     ) {
       pellets.splice(i, 1); // Remove pellet
@@ -480,6 +584,9 @@ function animate() {
 
   ghosts.forEach((ghost) => {
     ghost.update();
+      //ghost touch player
+
+
     const collisions = [];
 
     boundaries.forEach((boundary) => {
@@ -568,7 +675,12 @@ function animate() {
 
     }
 
-  });
+  })
+
+  if (player.velocity.x >0) player.rotation = 0;
+  else if (player.velocity.x< 0) player.rotation = Math.PI;
+  else if (player.velocity.y>0) player.rotation = Math.PI / 2;
+  else if (player.velocity.y< 0) player.rotation = Math.PI *1.5
   // Update ghost logic (expand here as needed)
   // ghosts.forEach((ghost) => {
   //   ghost.update();
