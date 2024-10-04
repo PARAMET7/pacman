@@ -1,17 +1,55 @@
-<style>
-  body{
-    margin:0;
-    background-color: black;
-    padding: 10px 20px;
-  }
-</style>
-<p style="color: rgb(226, 3, 78); font-family: sans-serif;
-font-size: 15px; margin-bottom: 7px;">
-  <span>Score:</span><span id="scoreEl">0  </span><span>  Press: a-left,
-    d-right, w-up, s-down
-
-  </span>
-</p>
-<canvas></canvas>
-
-<script src="index.js" defer></script>
+<body>
+  <div>
+    <h1>
+      Pac-Man
+    </h1>
+    <style>
+      #gameCanvas {
+        box-shadow: 10px 10px 30px #FF00FF;
+      }
+      h1 {
+        text-align: center;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+          color:#FF00FF  ;
+      }
+      h2 {
+        text-align: center;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+          color:#FF00FF  ;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(
+          0deg,
+          #FF00FF 10%,
+          #040503 25%
+        );
+      }
+      p {
+        color: FF00FF;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 30px;
+        margin-bottom: 7px;
+        display: flex;
+        justify-content: center;
+      }
+      #scoreEl {
+        color: #FF00FF;
+      }
+    </style>
+    <p>
+      <span>Score: </span><span id="scoreEl">0</span>
+      <h2>
+        <span>
+          Press: a-left,
+        d-right, w-up, s-down
+        </span>
+      </h2>
+    </p>
+    <canvas id="gameCanvas"></canvas>
+  </div>
+  <script src="index.js" defer></script>
+</body>

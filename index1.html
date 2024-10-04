@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pac-Man</title>
+</head>
+<body>
+  <div>
+    <h1>
+      Pac-Man
+    </h1>
+    <style>
+      #gameCanvas {
+        box-shadow: 10px 10px 30px #FF00FF;
+      }
+      h1 {
+        text-align: center;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+          color:#FF00FF  ;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(
+          0deg,
+          #FF00FF 10%,
+          #040503 25%
+        );
+      }
+
+    </style>
+    <canvas id="gameCanvas"></canvas>
+
+  </div>
+  <script src="src/Game.js" type="module"></script>
+</body>
+</html>
