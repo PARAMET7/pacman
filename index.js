@@ -6,6 +6,12 @@ const scoreEl= document.querySelector("#scoreEl");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+let gameOver = false;
+let gameWin = false;
+const gameOverSound = new Audio("./sounds/gameOver.wav");
+const gameWinSound = new Audio("./sounds/gameWin.wav");
+
+
 class Boundary {
   static width = 40;
   static height = 40;
@@ -26,6 +32,7 @@ class Pellet {
   constructor({ position }) {
     this.position = position;
     this.radius = 3;
+
   }
 
   draw() {
@@ -299,6 +306,8 @@ class Player {
     this.radians = 0.60;
     this.openRate =0.12;
     this.rotation= 0;
+    this.powerDotSound = new Audio("sounds/power_dot.wav");
+    this.powerDotSound.play();
   }
 
   draw() {
@@ -512,7 +521,8 @@ function animate() {
       if (ghost.scared){
         ghosts.splice(i,1)
       } else {
-        cancelAnimationFrame(animationId)
+        cancelAnimationFrame(animationId);
+        gameOverSound.play();
         console.log('you lose')
       }
     }
@@ -521,6 +531,7 @@ function animate() {
   //win condition goes here;
   if ( pellets.length===0){
     cancelAnimationFrame(animationId);
+    gameWinSound.play();s
     console.log('you win');
   }
 
@@ -561,6 +572,7 @@ function animate() {
       pellets.splice(i, 1); // Remove pellet
       score += 10;
       scoreEl.innerHTML = score;
+
     }
   }
 
