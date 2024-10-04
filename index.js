@@ -523,7 +523,9 @@ function animate() {
       } else {
         cancelAnimationFrame(animationId);
         gameOverSound.play();
-        console.log('you lose')
+        console.log('Gameover')
+        alert("Gameover");
+
       }
     }
   }
@@ -783,7 +785,7 @@ function animate() {
 animate();
 
 
-// Event listeners for player controls
+// Event listeners for player controls---work on it !!!
 addEventListener('keydown', ({ key }) => {
   switch (key) {
     case 'w':
